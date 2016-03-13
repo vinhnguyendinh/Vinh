@@ -1,5 +1,9 @@
 package fish;
 
+import graphics.Animation;
+import graphics.Topic;
+import singleton.GameManager;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -11,27 +15,33 @@ import java.io.IOException;
 public class Player extends FishObject {
     private int level;
     private int direction; // 1.Left - 2.Right
+    private int start;
+    private int end;
+    private Animation anim;
+
+    private void initAnimation() {
+        if(level == 1) {
+            start = 180; end = 206;
+        }
+        else if(level == 2) {
+            start = 257; end = 285;
+        }
+        else if(level == 3) {
+            start = 557; end = 583;
+        }
+        anim  = new Animation(start,end,50);
+    }
+
     public Player(int positionX, int positionY, int speed) {
         super(positionX, positionY, speed);
         this.direction = 1;
-        if(direction == 1) {
-            try {
-                this.sprite = ImageIO.read(new File("Resources/image 911.png"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else if(direction == 2) {
-            try {
-                this.sprite = ImageIO.read(new File("Resources/image 919.png"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        this.level = 1;
+        initAnimation();
     }
 
     public void draw(Graphics g) {
-        super.draw(g);
+        anim.draw(g, getPositionX() + GameManager.getInstance().getLocationX()
+                , getPositionY() + GameManager.getInstance().getLocationY());
     }
 
     public void move(int positionX, int positionY) {

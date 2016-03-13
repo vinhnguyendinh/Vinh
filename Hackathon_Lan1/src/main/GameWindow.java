@@ -44,14 +44,6 @@ public class GameWindow extends Frame implements Runnable {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                int tempX = PlayerManager.getInstance().getPlayer().getPositionX();
-                if(e.getX() > tempX &&  PlayerManager.getInstance().getPlayer().getDirection() == 1) {
-                    PlayerManager.getInstance().getPlayer().setDirection(2);
-                }
-                else if(e.getX() < tempX &&  PlayerManager.getInstance().getPlayer().getDirection() == 2) {
-                    PlayerManager.getInstance().getPlayer().setDirection(1);
-                }
-
                 PlayerManager.getInstance().getPlayer().move(e.getX(),e.getY());
                 // Hàm ẩn chuột
                 BufferedImage cursorImg = new BufferedImage(PlayerManager.getInstance().getPlayer().getPositionX(), PlayerManager.getInstance().getPlayer().getPositionY(), BufferedImage.TYPE_INT_ARGB);
