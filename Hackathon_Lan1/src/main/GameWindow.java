@@ -1,5 +1,7 @@
 package main;
 
+import fish.FishEnemy;
+import singleton.FishEnemyManager;
 import singleton.PlayerManager;
 
 import javax.imageio.ImageIO;
@@ -8,6 +10,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 /**
  * Created by VinhNguyenDinh on 03/13/2016.
@@ -16,8 +19,10 @@ public class GameWindow extends Frame implements Runnable {
     Graphics seconds;
     Image image;
     BufferedImage background;
+    Vector<FishEnemy> vectorFishEnemy;
 
     public GameWindow() {
+        vectorFishEnemy =  FishEnemyManager.getInstance().getVectorFishEnemy();
 
         this.setTitle("FEEDING FRENZY");
         this.setSize(800, 600);
@@ -36,6 +41,7 @@ public class GameWindow extends Frame implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        initFish();
         this.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -51,6 +57,12 @@ public class GameWindow extends Frame implements Runnable {
                 setCursor(blankCursor);
             }
         });
+    }
+    private void initFish() {
+        vectorFishEnemy.add(new FishEnemy(200,300,2));
+        vectorFishEnemy.add(new FishEnemy(400,200,2));
+        vectorFishEnemy.add(new FishEnemy(550,100,2));
+        vectorFishEnemy.add(new FishEnemy(150,400,2));
     }
 
     @Override
@@ -70,12 +82,18 @@ public class GameWindow extends Frame implements Runnable {
     public void paint(Graphics g) {
         g.drawImage(background,0,0,null);
         PlayerManager.getInstance().getPlayer().draw(g);
+        for(FishEnemy fishEnemy : vectorFishEnemy){
+            fishEnemy.draw(g);
+        }
     }
 
     @Override
     public void run() {
         while(true) {
             PlayerManager.getInstance().getPlayer().update();
+            for(FishEnemy fishEnemy : vectorFishEnemy){
+                fishEnemy.update();
+            }
             repaint();
             try {
                 Thread.sleep(17);
