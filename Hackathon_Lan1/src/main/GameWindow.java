@@ -1,6 +1,7 @@
 package main;
 
 import fish.FishEnemy;
+import fish.FishEnemy1;
 import singleton.FishEnemyManager;
 import singleton.PlayerManager;
 
@@ -20,9 +21,12 @@ public class GameWindow extends Frame implements Runnable {
     Image image;
     BufferedImage background;
     Vector<FishEnemy> vectorFishEnemy;
+    Vector<FishEnemy1> vectorFishEnemy1;
 
     public GameWindow() {
         vectorFishEnemy =  FishEnemyManager.getInstance().getVectorFishEnemy();
+        vectorFishEnemy1 = FishEnemyManager.getInstance().getVectorFishEnemy1();
+
 
         this.setTitle("FEEDING FRENZY");
         this.setSize(800, 600);
@@ -63,7 +67,14 @@ public class GameWindow extends Frame implements Runnable {
         vectorFishEnemy.add(new FishEnemy(400,200,2));
         vectorFishEnemy.add(new FishEnemy(550,100,2));
         vectorFishEnemy.add(new FishEnemy(150,400,2));
+        vectorFishEnemy1.add(new FishEnemy1(160,300,2));
+        vectorFishEnemy1.add(new FishEnemy1(450,200,2));
+        vectorFishEnemy1.add(new FishEnemy1(500,100,2));
+        vectorFishEnemy1.add(new FishEnemy1(260,400,2));
+
+
     }
+
 
     @Override
     public void update(Graphics g){
@@ -85,6 +96,8 @@ public class GameWindow extends Frame implements Runnable {
         for(FishEnemy fishEnemy : vectorFishEnemy){
             fishEnemy.draw(g);
         }
+        for(FishEnemy1 fishEnemy1 : vectorFishEnemy1){
+            fishEnemy1.draw(g);}
         PlayerManager.getInstance().getPlayer().draw(g);
     }
 
@@ -92,9 +105,13 @@ public class GameWindow extends Frame implements Runnable {
     public void run() {
         while(true) {
             PlayerManager.getInstance().getPlayer().update();
-            for(FishEnemy fishEnemy : vectorFishEnemy){
+            for (FishEnemy fishEnemy : vectorFishEnemy) {
                 fishEnemy.update();
             }
+            for (FishEnemy1 fishEnemy1 : vectorFishEnemy1) {
+                fishEnemy1.update();
+            }
+
             repaint();
             try {
                 Thread.sleep(17);
@@ -103,4 +120,6 @@ public class GameWindow extends Frame implements Runnable {
             }
         }
     }
+
+
 }
