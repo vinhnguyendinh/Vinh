@@ -1,6 +1,7 @@
 package main;
 
 import fish.FishEnemy;
+import fish.Player;
 import singleton.FishEnemyManager;
 import singleton.PlayerManager;
 
@@ -21,9 +22,9 @@ public class GameWindow extends Frame implements Runnable {
     BufferedImage background;
     Vector<FishEnemy> vectorFishEnemy;
 
+
     public GameWindow() {
         vectorFishEnemy =  FishEnemyManager.getInstance().getVectorFishEnemy();
-
         this.setTitle("FEEDING FRENZY");
         this.setSize(800, 600);
         this.setVisible(true);

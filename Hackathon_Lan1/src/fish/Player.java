@@ -4,6 +4,7 @@ import graphics.Animation;
 import graphics.Topic;
 import singleton.FishEnemyManager;
 import singleton.GameManager;
+import singleton.PlayerManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,8 +19,10 @@ public class Player extends FishObject {
     private int direction; // 1.Left - 2.Right
     private int start;
     private int end;
-    private Animation anim;
+    private int oldX;
+    private int oldY;
     private boolean check = true;
+    private Animation anim;
 
     private void initAnimation() {
         if(level == 1) {
@@ -46,17 +49,31 @@ public class Player extends FishObject {
                 , getPositionY() + GameManager.getInstance().getLocationY());
     }
 
+    public static int count = 0;
     public void move(int positionX, int positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
+
     }
+
 
     public void update() {
         super.update();
         this.move(this.positionX, this.positionY);
-
+        checkCollisionEnemy();
     }
 
+    public boolean checkCollisionEnemy() {
+        Rectangle rectPlayer = new Rectangle(positionX, positionY, anim.getWidth(), anim.getHeight());
+        for(FishEnemy fishEnemy : FishEnemyManager.getInstance().getVectorFishEnemy()) {
+            Rectangle rectFishEnemy = new Rectangle(fishEnemy.getPositionX(), fishEnemy.getPositionY(), fishEnemy.getWidth(), fishEnemy.getHeight());
+            if(rectPlayer.intersects(rectFishEnemy)) {
+                FishEnemyManager.getInstance().getVectorFishEnemy().remove(FishEnemyManager.getInstance().getVectorFishEnemy().indexOf(fishEnemy));
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getLevel() {
         return level;
@@ -72,6 +89,22 @@ public class Player extends FishObject {
 
     public void setDirection(int direction) {
         this.direction = direction;
+    }
+
+    public int getOldX() {
+        return oldX;
+    }
+
+    public void setOldX(int oldX) {
+        this.oldX = oldX;
+    }
+
+    public int getOldY() {
+        return oldY;
+    }
+
+    public void setOldY(int oldY) {
+        this.oldY = oldY;
     }
 
 }

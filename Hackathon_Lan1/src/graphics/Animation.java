@@ -79,4 +79,12 @@ public class Animation extends GameObject {
             }
         }
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
