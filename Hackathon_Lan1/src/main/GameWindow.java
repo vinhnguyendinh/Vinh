@@ -81,10 +81,11 @@ public class GameWindow extends Frame implements Runnable {
     @Override
     public void paint(Graphics g) {
         g.drawImage(background,0,0,null);
-        PlayerManager.getInstance().getPlayer().draw(g);
+
         for(FishEnemy fishEnemy : vectorFishEnemy){
             fishEnemy.draw(g);
         }
+        PlayerManager.getInstance().getPlayer().draw(g);
     }
 
     @Override

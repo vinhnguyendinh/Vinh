@@ -2,6 +2,7 @@ package fish;
 
 import graphics.Animation;
 import graphics.Topic;
+import singleton.FishEnemyManager;
 import singleton.GameManager;
 
 import javax.imageio.ImageIO;
@@ -18,6 +19,7 @@ public class Player extends FishObject {
     private int start;
     private int end;
     private Animation anim;
+    private boolean check = true;
 
     private void initAnimation() {
         if(level == 1) {
@@ -52,7 +54,9 @@ public class Player extends FishObject {
     public void update() {
         super.update();
         this.move(this.positionX, this.positionY);
+
     }
+
 
     public int getLevel() {
         return level;
@@ -69,4 +73,5 @@ public class Player extends FishObject {
     public void setDirection(int direction) {
         this.direction = direction;
     }
+
 }

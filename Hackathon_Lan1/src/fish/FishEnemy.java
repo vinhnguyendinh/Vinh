@@ -12,11 +12,13 @@ public class FishEnemy extends FishObject{
     private int direction; // 1.Left - 2.Right
     private int start;
     private int end;
+    private int delta;
     private Animation anim;
+
 
     public FishEnemy(int positionX, int positionY, int speed) {
         super(positionX, positionY, speed);
-        this.direction = 1;
+
 
         initAnimation();
     }
@@ -24,13 +26,15 @@ public class FishEnemy extends FishObject{
     private void initAnimation(){
         start = 557;
         end = 583;
-        anim = new Animation(start,end,50);
+        delta = 100;
+        anim = new Animation(start,end,delta);
 
     }
     public void draw(Graphics g) {
+            anim.draw(g, getPositionX() + GameManager.getInstance().getLocationX(),
+                    getPositionY() + GameManager.getInstance().getLocationY());
 
-        anim.draw(g, getPositionX() + GameManager.getInstance().getLocationX()
-                , getPositionY() + GameManager.getInstance().getLocationY());
+
     }
 
     //ham move()
@@ -47,6 +51,11 @@ public class FishEnemy extends FishObject{
 
         xVelocity =  ( int )  ( speed * Math . cos ( direction ));
         yVelocity =  ( int )  ( speed * Math . sin ( direction ));
+        if(xVelocity > 0){
+            anim.setFlipX(-1);
+        } else {
+            anim.setFlipX(1);
+        }
     }
     public void move() {
         positionX += xVelocity ;
@@ -72,6 +81,18 @@ public class FishEnemy extends FishObject{
     }
 
     public void update(){
+
+
+
+
+
         this.move();
+    }
+    public int getWidth() {
+        return sprite.getWidth();
+    }
+
+    public int getHeight() {
+        return sprite.getHeight();
     }
 }
