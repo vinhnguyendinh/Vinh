@@ -23,7 +23,7 @@ public class Player extends FishObject {
 
     private void initAnimation() {
         if(level == 1) {
-            start = 180; end = 206;
+            start = 180; end = 228;
         }
         else if(level == 2) {
             start = 257; end = 285;
@@ -54,9 +54,23 @@ public class Player extends FishObject {
     public void update() {
         super.update();
         this.move(this.positionX, this.positionY);
+        if(checkCollisionEnemy()) {
+            // Vẽ hình cá đớp mồi
 
+        }
     }
 
+    public boolean checkCollisionEnemy() {
+        Rectangle rectPlayer = new Rectangle(positionX, positionY, anim.getWidth(), anim.getHeight());
+        for (FishEnemy fishEnemy : FishEnemyManager.getInstance().getVectorFishEnemy()) {
+            Rectangle rectFishEnemy = new Rectangle(fishEnemy.getPositionX(), fishEnemy.getPositionY(), fishEnemy.getWidth(), fishEnemy.getHeight());
+            if (rectPlayer.intersects(rectFishEnemy)) {
+                FishEnemyManager.getInstance().getVectorFishEnemy().remove(FishEnemyManager.getInstance().getVectorFishEnemy().indexOf(fishEnemy));
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getLevel() {
         return level;

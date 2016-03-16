@@ -20,8 +20,6 @@ public class FishEnemyManager {
     private FishEnemyManager(){
         vectorFishEnemy = new Vector<FishEnemy>();
         vectorFishEnemy1 = new Vector<FishEnemy1>();
-
-
     }
 
     public Vector<FishEnemy> getVectorFishEnemy(){
