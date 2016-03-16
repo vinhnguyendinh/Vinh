@@ -35,6 +35,7 @@ public class GameWindow extends Frame implements Runnable {
         this.setVisible(true);
         this.setResizable(false);
         this.setLocation(250,80);
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -63,6 +64,7 @@ public class GameWindow extends Frame implements Runnable {
                 setCursor(blankCursor);
             }
         });
+
     }
 
     private void initFish() {
@@ -72,21 +74,13 @@ public class GameWindow extends Frame implements Runnable {
         vectorFishEnemy.add(new FishEnemy(150,400,2));
     }
 
-    public static void music() {
-        AudioPlayer MGP = AudioPlayer.player;
-        AudioStream BGM;
-        AudioData MD;
-        ContinuousAudioDataStream loop = null;
-
-        try {
-            BGM = new AudioStream(new FileInputStream("Resources/Replay - SHINee.mp3"));
-            MD = BGM.getData();
-            loop = new ContinuousAudioDataStream(MD);
-        } catch(IOException error)  {
-            System.out.println("Error!!!");
+    public static class AL implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            music();
         }
-        MGP.start(loop);
     }
+
     @Override
     public void update(Graphics g){
         if(image == null){
@@ -103,11 +97,25 @@ public class GameWindow extends Frame implements Runnable {
     @Override
     public void paint(Graphics g) {
         g.drawImage(background,0,0,null);
-
         for(FishEnemy fishEnemy : vectorFishEnemy){
             fishEnemy.draw(g);
         }
         PlayerManager.getInstance().getPlayer().draw(g);
+    }
+
+    public static void music() {
+        AudioPlayer MGP = AudioPlayer.player;
+        AudioStream BGM;
+        AudioData MD;
+        ContinuousAudioDataStream loop = null;
+        try {
+            BGM = new AudioStream(new FileInputStream("Replay - SHINee.mp3"));
+            MD = BGM.getData();
+            loop = new ContinuousAudioDataStream(MD);
+        } catch(IOException error)  {
+            System.out.println("Error!!!");
+        }
+        MGP.start(loop);
     }
 
     @Override
@@ -123,7 +131,6 @@ public class GameWindow extends Frame implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-           // music();
         }
     }
 }

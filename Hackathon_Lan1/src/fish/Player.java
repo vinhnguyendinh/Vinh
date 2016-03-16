@@ -12,33 +12,52 @@ public class Player extends FishObject {
     private int direction; // 1.Left - 2.Right
     private int start;
     private int end;
+    private int start_eat;
+    private int end_eat;
     private Animation anim;
+    private Animation anim_eat;
     private boolean check = true;
 
     private void initAnimation() {
         if(level == 1) {
-            start = 180; end = 206;
+            start = Define.FISH_LEVEL1_START; end = Define.FISH_LEVEL1_END;
+            start_eat = Define.FISH_LEVEL1_EAT_START; end_eat = Define.FISH_LEVEL1_EAT_END;
         }
         else if(level == 2) {
-            start = 257; end = 285;
+            start = Define.FISH_LEVEL2_START; end = Define.FISH_LEVEL2_END;
+            start_eat = Define.FISH_LEVEL2_EAT_START; end_eat = Define.FISH_LEVEL2_EAT_END;
         }
         else if(level == 3) {
-            start = 557; end = 583;
+            start = Define.FISH_LEVEL3_START; end = Define.FISH_LEVEL3_END;
+            start_eat = Define.FISH_LEVEL3_EAT_START; end_eat = Define.FISH_LEVEL3_EAT_END;
         }
         anim  = new Animation(start,end,50);
+        anim_eat  = new Animation(start_eat,end_eat,50);
     }
 
     public Player(int positionX, int positionY, int speed) {
         super(positionX, positionY, speed);
         this.direction = 1;
-        this.level = 1;
+        this.level = 2;
         initAnimation();
     }
-
+    int count = 0;
     public void draw(Graphics g) {
-        anim.draw(g, positionX + GameManager.getInstance().getLocationX()
-                , positionY + GameManager.getInstance().getLocationY());
+        if(check) {
+            anim.draw(g, positionX + GameManager.getInstance().getLocationX()
+                    , positionY + GameManager.getInstance().getLocationY());
+        }
+        else {
+            anim_eat.draw(g, positionX + GameManager.getInstance().getLocationX()
+                    , positionY + GameManager.getInstance().getLocationY());
+            count++;
+            if(count > 17) {
+                count = 0;
+                check = true;
+            }
+        }
     }
+
 
     public void move(int positionX, int positionY) {
         this.positionX = positionX;
@@ -49,11 +68,8 @@ public class Player extends FishObject {
         super.update();
         this.move(this.positionX, this.positionY);
         if(checkCollisionEnemy()) {
-            // Vẽ hình cá đớp mồi
-           // anim.setEnd(226);
+            check = false;
         }
-
-        //else end = 206;
     }
 
     public boolean checkCollisionEnemy() {
@@ -84,4 +100,7 @@ public class Player extends FishObject {
         this.direction = direction;
     }
 
+    public boolean getCheck() {
+        return check;
+    }
 }
