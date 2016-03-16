@@ -15,11 +15,8 @@ public class FishEnemy extends FishObject{
     private int delta;
     private Animation anim;
 
-
     public FishEnemy(int positionX, int positionY, int speed) {
         super(positionX, positionY, speed);
-
-
         initAnimation();
     }
 
@@ -33,10 +30,7 @@ public class FishEnemy extends FishObject{
     public void draw(Graphics g) {
             anim.draw(g, getPositionX() + GameManager.getInstance().getLocationX(),
                     getPositionY() + GameManager.getInstance().getLocationY());
-
-
     }
-
     //ham move()
 
     private  int xVelocity =  1 ;
@@ -76,14 +70,9 @@ public class FishEnemy extends FishObject{
             positionY = UP_WALL ;
             setRandomDirection ();
         }
-
-
     }
 
     public void update(){
-
-
-
 
 
         this.move();

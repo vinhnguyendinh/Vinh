@@ -1,6 +1,10 @@
 package main;
 
+import Scene.Coral;
+import fish.FishCaDoc;
 import fish.FishEnemy;
+import fish.FishEnemySmall;
+import fish.JellyFish;
 import singleton.FishEnemyManager;
 import singleton.PlayerManager;
 
@@ -19,13 +23,22 @@ public class GameWindow extends Frame implements Runnable {
     Graphics seconds;
     Image image;
     BufferedImage background;
+
     Vector<FishEnemy> vectorFishEnemy;
+    Vector<FishEnemySmall> vectorFishEnemySmall;
+    Vector<FishCaDoc> vectorFishCaDoc;
+    Vector<JellyFish> vectorJellyFish;
+    Vector<Coral> vectorCoral;
 
     public GameWindow() {
         vectorFishEnemy =  FishEnemyManager.getInstance().getVectorFishEnemy();
+        vectorFishEnemySmall = FishEnemyManager.getInstance().getVectorFishEnemySmall();
+        vectorFishCaDoc = FishEnemyManager.getInstance().getVectorFishCaDoc();
+        vectorJellyFish = FishEnemyManager.getInstance().getVectorJellyFish();
+        vectorCoral = FishEnemyManager.getInstance().getVectorCoral();
 
         this.setTitle("FEEDING FRENZY");
-        this.setSize(800, 600);
+        this.setSize(800,600);
         this.setVisible(true);
         this.setResizable(false);
         this.setLocation(250,80);
@@ -59,10 +72,23 @@ public class GameWindow extends Frame implements Runnable {
         });
     }
     private void initFish() {
+
         vectorFishEnemy.add(new FishEnemy(200,300,2));
         vectorFishEnemy.add(new FishEnemy(400,200,2));
         vectorFishEnemy.add(new FishEnemy(550,100,2));
         vectorFishEnemy.add(new FishEnemy(150,400,2));
+
+        vectorFishEnemySmall.add(new FishEnemySmall(100,200,4));
+        vectorFishEnemySmall.add(new FishEnemySmall(150,50,2));
+
+        vectorFishCaDoc.add(new FishCaDoc(50,70,5));
+        vectorFishCaDoc.add(new FishCaDoc(50,150,3));
+
+        vectorJellyFish.add(new JellyFish(300,550,3));
+        vectorJellyFish.add(new JellyFish(50,600,2));
+
+        vectorCoral.add(new Coral(330,400,2));
+        vectorCoral.add(new Coral(200,100,1));
     }
 
     @Override
@@ -85,6 +111,23 @@ public class GameWindow extends Frame implements Runnable {
         for(FishEnemy fishEnemy : vectorFishEnemy){
             fishEnemy.draw(g);
         }
+
+        for(FishEnemySmall fishEnemySmall : vectorFishEnemySmall){
+            fishEnemySmall.draw(g);
+        }
+
+        for(FishCaDoc fishCaDoc : vectorFishCaDoc){
+            fishCaDoc.draw(g);
+        }
+
+        for(JellyFish jellyFish : vectorJellyFish){
+            jellyFish.draw(g);
+        }
+
+        for(Coral coral : vectorCoral){
+            coral.draw(g);
+        }
+
         PlayerManager.getInstance().getPlayer().draw(g);
     }
 
@@ -95,6 +138,23 @@ public class GameWindow extends Frame implements Runnable {
             for(FishEnemy fishEnemy : vectorFishEnemy){
                 fishEnemy.update();
             }
+
+            for(FishEnemySmall fishEnemySmall : vectorFishEnemySmall){
+                fishEnemySmall.update();
+            }
+
+            for(FishCaDoc fishCaDoc : vectorFishCaDoc){
+                fishCaDoc.update();
+            }
+
+            for(JellyFish jellyFish : vectorJellyFish){
+                jellyFish.update();
+            }
+
+            for(Coral coral : vectorCoral){
+                coral.update();
+            }
+
             repaint();
             try {
                 Thread.sleep(17);
