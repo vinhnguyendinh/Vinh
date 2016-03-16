@@ -3,12 +3,17 @@ package main;
 import fish.FishEnemy;
 import singleton.FishEnemyManager;
 import singleton.PlayerManager;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -59,6 +64,7 @@ public class GameWindow extends Frame implements Runnable {
             }
         });
     }
+
     private void initFish() {
         vectorFishEnemy.add(new FishEnemy(200,300,2));
         vectorFishEnemy.add(new FishEnemy(400,200,2));
@@ -66,6 +72,21 @@ public class GameWindow extends Frame implements Runnable {
         vectorFishEnemy.add(new FishEnemy(150,400,2));
     }
 
+    public static void music() {
+        AudioPlayer MGP = AudioPlayer.player;
+        AudioStream BGM;
+        AudioData MD;
+        ContinuousAudioDataStream loop = null;
+
+        try {
+            BGM = new AudioStream(new FileInputStream("Resources/Replay - SHINee.mp3"));
+            MD = BGM.getData();
+            loop = new ContinuousAudioDataStream(MD);
+        } catch(IOException error)  {
+            System.out.println("Error!!!");
+        }
+        MGP.start(loop);
+    }
     @Override
     public void update(Graphics g){
         if(image == null){
@@ -102,6 +123,7 @@ public class GameWindow extends Frame implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+           // music();
         }
     }
 }

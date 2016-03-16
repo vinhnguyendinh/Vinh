@@ -1,15 +1,9 @@
 package fish;
 
 import graphics.Animation;
-import graphics.Topic;
 import singleton.FishEnemyManager;
 import singleton.GameManager;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Created by VinhNguyenDinh on 03/13/2016.
  */
@@ -23,7 +17,7 @@ public class Player extends FishObject {
 
     private void initAnimation() {
         if(level == 1) {
-            start = 180; end = 228;
+            start = 180; end = 206;
         }
         else if(level == 2) {
             start = 257; end = 285;
@@ -42,8 +36,8 @@ public class Player extends FishObject {
     }
 
     public void draw(Graphics g) {
-        anim.draw(g, getPositionX() + GameManager.getInstance().getLocationX()
-                , getPositionY() + GameManager.getInstance().getLocationY());
+        anim.draw(g, positionX + GameManager.getInstance().getLocationX()
+                , positionY + GameManager.getInstance().getLocationY());
     }
 
     public void move(int positionX, int positionY) {
@@ -56,8 +50,10 @@ public class Player extends FishObject {
         this.move(this.positionX, this.positionY);
         if(checkCollisionEnemy()) {
             // Vẽ hình cá đớp mồi
-
+           // anim.setEnd(226);
         }
+
+        //else end = 206;
     }
 
     public boolean checkCollisionEnemy() {
