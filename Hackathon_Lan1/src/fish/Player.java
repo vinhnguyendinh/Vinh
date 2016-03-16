@@ -41,7 +41,8 @@ public class Player extends FishObject {
         this.level = 2;
         initAnimation();
     }
-    int count = 0;
+
+    private int count = 0;
     public void draw(Graphics g) {
         if(check) {
             anim.draw(g, positionX + GameManager.getInstance().getLocationX()
@@ -72,7 +73,7 @@ public class Player extends FishObject {
         }
     }
 
-    public boolean checkCollisionEnemy() {
+    private boolean checkCollisionEnemy() {
         Rectangle rectPlayer = new Rectangle(positionX, positionY, anim.getWidth(), anim.getHeight());
         for (FishEnemy fishEnemy : FishEnemyManager.getInstance().getVectorFishEnemy()) {
             Rectangle rectFishEnemy = new Rectangle(fishEnemy.getPositionX(), fishEnemy.getPositionY(), fishEnemy.getWidth(), fishEnemy.getHeight());

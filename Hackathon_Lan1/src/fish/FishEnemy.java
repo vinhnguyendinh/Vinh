@@ -22,8 +22,8 @@ public class FishEnemy extends FishObject{
     }
 
     private void initAnimation(){
-        start = 557;
-        end = 583;
+        start = Define.FISH_ENEMY_1_START;
+        end = Define.FISH_ENEMY_1_END;
         delta = 100;
         anim = new Animation(start,end,delta);
     }
@@ -43,11 +43,11 @@ public class FishEnemy extends FishObject{
 
     public  void setRandomDirection ()  {
         double direction =  Math . random ()* 3.0 * Math . PI ;
-
         xVelocity =  ( int )  ( speed * Math . cos ( direction ));
         yVelocity =  ( int )  ( speed * Math . sin ( direction ));
         if(xVelocity > 0){
             anim.setFlipX(-1);
+            //this.direction =
         } else {
             anim.setFlipX(1);
         }

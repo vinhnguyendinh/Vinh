@@ -7,7 +7,6 @@ import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import sun.audio.ContinuousAudioDataStream;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
@@ -35,7 +34,7 @@ public class GameWindow extends Frame implements Runnable {
         this.setVisible(true);
         this.setResizable(false);
         this.setLocation(250,80);
-
+        music();
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -68,17 +67,10 @@ public class GameWindow extends Frame implements Runnable {
     }
 
     private void initFish() {
-        vectorFishEnemy.add(new FishEnemy(200,300,2));
-        vectorFishEnemy.add(new FishEnemy(400,200,2));
-        vectorFishEnemy.add(new FishEnemy(550,100,2));
-        vectorFishEnemy.add(new FishEnemy(150,400,2));
-    }
-
-    public static class AL implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            music();
-        }
+        vectorFishEnemy.add(new FishEnemy(50,300,2));
+        vectorFishEnemy.add(new FishEnemy(20,200,2));
+        vectorFishEnemy.add(new FishEnemy(150,100,2));
+        vectorFishEnemy.add(new FishEnemy(350,400,2));
     }
 
     @Override
@@ -102,29 +94,32 @@ public class GameWindow extends Frame implements Runnable {
         }
         PlayerManager.getInstance().getPlayer().draw(g);
     }
-
-    public static void music() {
+    public void music ()
+    {
         AudioPlayer MGP = AudioPlayer.player;
         AudioStream BGM;
-        AudioData MD;
+        AudioData MD ;
         ContinuousAudioDataStream loop = null;
         try {
-            BGM = new AudioStream(new FileInputStream("Replay - SHINee.mp3"));
+            BGM = new AudioStream (new FileInputStream("sound.wav"));
             MD = BGM.getData();
             loop = new ContinuousAudioDataStream(MD);
-        } catch(IOException error)  {
-            System.out.println("Error!!!");
+            AudioPlayer.player.start(BGM);
+        } catch (IOException error) {
+            MGP.start(loop);
+            System.out.println("Error");
         }
-        MGP.start(loop);
-    }
 
+    }
     @Override
     public void run() {
+
         while(true) {
             PlayerManager.getInstance().getPlayer().update();
             for(FishEnemy fishEnemy : vectorFishEnemy){
                 fishEnemy.update();
             }
+
             repaint();
             try {
                 Thread.sleep(17);
