@@ -1,6 +1,7 @@
 package main;
 
 import fish.FishEnemy;
+import fish.FishEnemySmall;
 import fish.Player;
 import singleton.FishEnemyManager;
 import singleton.PlayerManager;
@@ -21,6 +22,7 @@ public class GameWindow extends Frame implements Runnable {
     Image image;
     BufferedImage background;
     Vector<FishEnemy> vectorFishEnemy;
+    Vector<FishEnemySmall> fishEnemySmallVector;
 
 
     public GameWindow() {
