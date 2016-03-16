@@ -9,12 +9,12 @@ import java.awt.*;
  * Created by Anh on 3/14/2016.
  */
 public class FishEnemy extends FishObject{
-    private int direction; // 1.Left - 2.Right
     private int start;
     private int end;
     private int delta;
     private Animation anim;
-
+    private Animation anim_flip;
+    private boolean check = true;
 
     public FishEnemy(int positionX, int positionY, int speed) {
         super(positionX, positionY, speed);
@@ -22,14 +22,32 @@ public class FishEnemy extends FishObject{
     }
 
     private void initAnimation(){
+        delta = 100;
+
         start = Define.FISH_ENEMY_1_START;
         end = Define.FISH_ENEMY_1_END;
-        delta = 100;
         anim = new Animation(start,end,delta);
+
+        start = Define.FISH_ENEMY_1_FLIP_START;
+        end = Define.FISH_ENEMY_1_FLIP_END;
+        anim_flip = new Animation(start,end,delta);
     }
+
+    private int count = 0;
     public void draw(Graphics g) {
+        if(check) {
             anim.draw(g, getPositionX() + GameManager.getInstance().getLocationX(),
                     getPositionY() + GameManager.getInstance().getLocationY());
+        }
+        else {
+            anim_flip.draw(g, positionX + GameManager.getInstance().getLocationX()
+                    , positionY + GameManager.getInstance().getLocationY());
+            count++;
+            if(count > 17) {
+                count = 0;
+                check = true;
+            }
+        }
     }
 
     //ham move()
@@ -47,7 +65,7 @@ public class FishEnemy extends FishObject{
         yVelocity =  ( int )  ( speed * Math . sin ( direction ));
         if(xVelocity > 0){
             anim.setFlipX(-1);
-            //this.direction =
+            check = false;
         } else {
             anim.setFlipX(1);
         }
