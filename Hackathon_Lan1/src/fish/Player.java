@@ -57,6 +57,7 @@ public class Player extends FishObject {
 
     }
 
+
     public int getLevel() {
         return level;
     }
